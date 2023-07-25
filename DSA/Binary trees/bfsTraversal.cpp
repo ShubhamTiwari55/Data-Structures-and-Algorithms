@@ -52,7 +52,7 @@ void levelOrderTraversal(node* root){
 }
     }
 
-//Executing the same above function using queues//
+//Executing the same above function using queues (BFS)//
 void levelOrderQueue(node* root){
     queue<node*> q;
     q.push(root);
