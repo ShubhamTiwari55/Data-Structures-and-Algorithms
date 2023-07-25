@@ -36,6 +36,16 @@ void nthLevel(node* root, int curr, int level){  //root, left, right, only nth l
     nthLevel(root->left,curr+1,level);
     nthLevel(root->right,curr+1,level);
 }
+int level(node* root){
+    if(root==NULL) return 0;
+    return 1 + max(level(root->left),level(root->right));
+}
+void levelOrderTraversal(node* root){
+    int n = level(root);
+    for(int i=1;i<=n;i++){
+        nthLevel(root,1,i);
+    }
+}
 int main(){
     node* a = new node(1);
     node* b = new node(2);
@@ -51,4 +61,6 @@ int main(){
     c->left=f;
     c->right=g;
     nthLevel(a,1,3);
+    cout<<endl;
+    levelOrderTraversal(a);
 }
