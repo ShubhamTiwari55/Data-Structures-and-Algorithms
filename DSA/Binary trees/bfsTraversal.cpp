@@ -32,7 +32,10 @@ void postOrder(node* root){  //left, right, root
 }
 void nthLevel(node* root, int curr, int level){  //root, left, right, only nth level elements
     if(root==NULL) return;
-    if(curr==level) cout<<root->val<<" ";
+    if(curr==level){
+        cout<<root->val<<" ";
+        return;
+    } 
     nthLevel(root->left,curr+1,level);
     nthLevel(root->right,curr+1,level);
 }
@@ -44,8 +47,9 @@ void levelOrderTraversal(node* root){
     int n = level(root);
     for(int i=1;i<=n;i++){
         nthLevel(root,1,i);
-    }
+         cout<<endl;
 }
+    }
 int main(){
     node* a = new node(1);
     node* b = new node(2);
@@ -60,7 +64,5 @@ int main(){
     b->right=e;
     c->left=f;
     c->right=g;
-    nthLevel(a,1,3);
-    cout<<endl;
-    levelOrderTraversal(a);
+    levelOrderTraversal(a);  //prints exactly like the structure of the tree//
 }
