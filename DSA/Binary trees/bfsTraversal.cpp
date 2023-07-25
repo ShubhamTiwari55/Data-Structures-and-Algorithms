@@ -80,5 +80,9 @@ int main(){
     b->right=e;
     c->left=f;
     c->right=g;
+    postOrder(a);
+    cout<<endl;
     levelOrderTraversal(a);  //prints exactly like the structure of the tree//
+    cout<<endl;
+    InOrder(a);
 }

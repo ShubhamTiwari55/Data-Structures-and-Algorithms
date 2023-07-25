@@ -46,12 +46,14 @@ int main(){
     node* e = new node(5);
     node* f = new node(6);
     node* g = new node(7);
+    node* h = new node(8);
     a->left=b;
     a->right=c;
     b->left=d;
     b->right=e;
     c->left=f;
     c->right=g;
+    d->left = h;
     displayTree(a);
     cout<<endl;
     cout<<sum(a)<<endl;
