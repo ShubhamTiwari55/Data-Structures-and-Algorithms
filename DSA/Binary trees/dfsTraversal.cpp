@@ -12,12 +12,25 @@ class node{
         this->right=NULL;
     }
 };
-void displayTree(node* root){
+void preorder(node* root){  //root, left, right
     if(root==NULL) return;
     cout<<root->val<<" ";
-    displayTree(root->left);
-    displayTree(root->right);
+    preorder(root->left);
+    preorder(root->right);
 }
+void InOrder(node* root){  //left, root, right
+    if(root==NULL) return;
+    InOrder(root->left);
+    cout<<root->val<<" ";
+    InOrder(root->right);
+}
+void postOrder(node* root){  //left, right, root
+    if(root==NULL) return;
+    postOrder(root->left);
+    postOrder(root->right);
+    cout<<root->val<<" ";
+}
+
 int main(){
     node* a = new node(1);
     node* b = new node(2);
@@ -32,4 +45,9 @@ int main(){
     b->right=e;
     c->left=f;
     c->right=g;
+    preorder(a);
+    cout<<endl;
+    InOrder(a);
+    cout<<endl;
+    postOrder(a);
 }
