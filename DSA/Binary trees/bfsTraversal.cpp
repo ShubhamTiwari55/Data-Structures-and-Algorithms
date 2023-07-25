@@ -1,5 +1,6 @@
 #include<iostream>
 #include<climits>
+#include<queue>
 using namespace std;
 class node{
     public:
@@ -30,7 +31,7 @@ void postOrder(node* root){  //left, right, root
     postOrder(root->right);
     cout<<root->val<<" ";
 }
-void nthLevel(node* root, int curr, int level){  //root, left, right, only nth level elements
+void nthLevel(node* root, int curr, int level){  //root, left, right
     if(root==NULL) return;
     if(curr==level){
         cout<<root->val<<" ";
@@ -39,7 +40,7 @@ void nthLevel(node* root, int curr, int level){  //root, left, right, only nth l
     nthLevel(root->left,curr+1,level);
     nthLevel(root->right,curr+1,level);
 }
-int level(node* root){
+int level(node* root){    //has use in the below function
     if(root==NULL) return 0;
     return 1 + max(level(root->left),level(root->right));
 }
@@ -50,6 +51,21 @@ void levelOrderTraversal(node* root){
          cout<<endl;
 }
     }
+
+//Executing the same above function using queues//
+void levelOrderQueue(node* root){
+    queue<node*> q;
+    q.push(root);
+    while(q.size()>0){
+        node* temp = q.front();
+        q.pop();
+        cout<<temp->val<<" ";
+        if(temp->left!=NULL) q.push(temp->left);
+        if(temp->right!=NULL) q.push(temp->right);
+    }
+    cout<<endl;
+}
+
 int main(){
     node* a = new node(1);
     node* b = new node(2);
