@@ -113,6 +113,50 @@ void calculate(TreeNode* root, int &count, long long sum){
     }
 };
 
+//leetcode ques no. 105 -> Construct Binary Tree from Preorder and Inorder Traversal//
+class Solution {
+public:
+    TreeNode* build(vector<int> &pre, int prelo, int prehi, vector<int> &in, int inlo, int inhi){
+        if(prelo>prehi || inlo>inhi) return NULL;
+        TreeNode* root = new TreeNode(pre[prelo]);
+        int i = inlo;
+        while(i<=inhi){
+            if(in[i]==pre[prelo]) break;
+            i++;
+        }
+        int leftcount = i-inlo;
+        int rightcount = inhi - 1;
+        root->left = build(pre, prelo+1, prelo+leftcount, in, inlo, i-1);
+        root->right = build(pre, prelo+leftcount+1, prehi, in, i+1, inhi);
+        return root;
+    }
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        int n = preorder.size();
+        return build(preorder, 0, n-1, inorder, 0, n-1);       
+    }
+};
 
+//leetcode ques no. 106 -> Construct Binary Tree from Inorder and Postorder Traversal//
+class Solution {
+public:
+    TreeNode* build(vector<int> &in, int inlo, int inhi, vector<int> &post, int postlo, int posthi){
+        if(inlo>inhi) return NULL;
+        TreeNode* root = new TreeNode(post[posthi]);
+        int i = inlo;
+        while(i<inhi){
+            if(in[i]==post[posthi]) break;
+            i++;
+        }
+        int leftcount = i-inlo;
+        int rightcount = inhi - 1;
+        root->left = build(in, inlo, i-1, post, postlo, postlo+leftcount-1);
+        root->right = build(in, i+1, inhi, post, postlo+leftcount, posthi-1);
+        return root;
+    }
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        int n = inorder.size();
+        return build(inorder, 0, n-1, postorder, 0 ,n-1);
+    }
+};
 int main(){
 }
