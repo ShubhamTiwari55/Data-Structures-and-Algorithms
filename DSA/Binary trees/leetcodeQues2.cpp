@@ -95,6 +95,24 @@ bool calculate(TreeNode* root, int sum){
 };
 
 //leetcode ques no. 437 -> path sum III//
+class Solution {
+public:
+void calculate(TreeNode* root, int &count, long long sum){
+    //pass count by reference to returned the changed value of count//
+    if(root==NULL) return;
+    if((long long)root->val==sum) count++;
+    calculate(root->left, count, sum-(long long)(root->val));
+    calculate(root->right, count, sum-(long long)(root->val));
+}
+    int pathSum(TreeNode* root, long long targetSum) {
+        if(root==NULL) return 0;
+        int count = 0;
+        calculate(root, count, targetSum);
+        count += (pathSum(root->left, targetSum) + pathSum(root->right, targetSum));
+        return count;
+    }
+};
+
 
 int main(){
 }
