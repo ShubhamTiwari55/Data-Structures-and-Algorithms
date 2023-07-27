@@ -32,4 +32,5 @@ Backtracking,
 Divide and Conquer,
 and more...
 
+# Thank You!
 Thank you for using and contributing to this DSA repository. Happy coding! If you have any questions or suggestions, please feel free to open an issue or contact us.
