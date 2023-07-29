@@ -1,5 +1,6 @@
 #include<iostream>
 #include<unordered_map>
+#include<vector>
 using namespace std;
 
 //leetcode ques no. 242 -> valid anagram//
@@ -47,6 +48,25 @@ public:
         }
         if(map1.size()>0) return false;
         return true;
+    }
+};
+
+//leetCode ques no. 1 -> Two sum//
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        vector<int> ans;
+        int n = nums.size();
+        unordered_map<int,int> m;
+        for(int i=0;i<n;i++){
+            int rem = target - nums[i];
+            if(m.find(rem)!=m.end()){
+                ans.push_back(m[rem]);
+                ans.push_back(i);
+            }
+            else m[nums[i]] = i;
+        }
+        return ans;
     }
 };
 int main(){
