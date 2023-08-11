@@ -122,5 +122,42 @@ public:
         return ans;
     }
 };
+
+//LeetCode ques no. 1814 -> Count nice pairs in an array//
+class Solution {
+public:
+    int rev(int n){
+        int r = 0;
+        while(n>0){
+            r *= 10;
+            r += n%10;
+            n/=10;
+        }
+        return r;
+    } 
+    int countNicePairs(vector<int>& nums) {
+        //for every i in nums -> nums[i] = nums[i]-rev(nums[i])//
+        int n = nums.size();
+        int count = 0;
+        for(int i=0;i<n;i++){
+            nums[i] = nums[i] - rev(nums[i]);
+        }
+        unordered_map<int,int>m;
+        for(int i=0;i<n;i++){
+
+     // we are finding if the element is already present or not and if present then its frequency is added to count as the new occurrence which is to be added can form pair with all the occurences of the element already present //
+
+            if(m.find(nums[i])!=m.end()){
+               count = count%1000000007;
+                count += m[nums[i]];
+                m[nums[i]]++; 
+            }
+            else m[nums[i]]++;
+        }
+        //Use of this modulo operator is specified iin question//
+        return count%1000000007;
+    }
+};
+
 int main(){
 }
