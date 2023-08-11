@@ -159,5 +159,53 @@ public:
     }
 };
 
+//LeetCode ques no. 138 -> copy list with random pointer
+class Node {
+public:
+    int val;
+    Node* next;
+    Node* random;
+    
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+//Actual solution starts from here...
+class Solution {
+public:
+    Node* copyRandomList(Node* head) {
+       //create deep copy without random color
+       Node* dummy = new Node(100);
+       Node* temp = head;
+       Node* tempC = dummy;
+       while(temp){
+           Node* a = new Node(temp->val);
+        tempC->next = a;
+           tempC = tempC->next;
+              temp = temp->next; 
+       }
+       Node* b = dummy->next;
+       Node* a = head;
+       unordered_map<Node*, Node*> m;
+       Node* tempa = a;
+       Node* tempb = b;
+       while(tempa!=NULL){
+           m[tempa] = tempb;
+           tempa = tempa->next;
+           tempb = tempb->next;
+       }
+       for(auto x:m){
+           Node* o = x.first;
+           Node* d = x.second;
+           if(o->random!=NULL){
+               Node* dRandom = m[o->random];
+               d->random = dRandom;
+           }
+       }
+       return b;
+    }
+};
 int main(){
 }
