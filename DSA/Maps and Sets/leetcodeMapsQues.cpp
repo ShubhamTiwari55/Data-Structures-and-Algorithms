@@ -3,6 +3,7 @@
 #include<vector>
 #include<unordered_set>
 #include<queue>
+#include<algorithm>
 using namespace std;
 
 class TreeNode {
@@ -296,6 +297,31 @@ void markParent(TreeNode* root,unordered_map<TreeNode*, TreeNode*>& parent){
             }
         }
         return maxLevel;
+    }
+};
+
+//leetcode ques no. 49 -> Group Anagrams//
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& arr) {
+        unordered_map<string, vector<string>>m;
+        for(int i=0;i<arr.size();i++){
+            string str = arr[i];
+            sort(str.begin(),str.end());
+            if(m.find(str)==m.end()){
+                vector<string> v;
+                v.push_back(arr[i]);
+                m[str] = v;
+            }
+            else{
+                m[str].push_back(arr[i]);
+            }
+        }
+        vector<vector<string>> ans;
+        for(auto x:m){
+            ans.push_back(x.second);
+        }
+        return ans;
     }
 };
 
