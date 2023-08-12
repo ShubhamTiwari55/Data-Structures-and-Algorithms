@@ -2,8 +2,20 @@
 #include<unordered_map>
 #include<vector>
 #include<unordered_set>
+#include<queue>
 using namespace std;
 
+class TreeNode {
+public:
+     int val;
+     TreeNode *left;
+     TreeNode *right;
+     TreeNode(int val){
+        this->left=NULL;
+        this->right=NULL;
+        this->val=val;
+     }
+ };
 //leetcode ques no. 242 -> valid anagram//
 class Solution {
 public:
@@ -230,5 +242,63 @@ public:
         return count;
     }
 };
+
+//leetcode ques no. 2385 -> Amount of time for binary tree to be infected//
+class Solution {
+public:
+TreeNode* first = NULL;
+void find(TreeNode* root, int start){
+    if(root==NULL) return;
+    if(root->val == start) first = root;
+    find(root->left, start);
+    find(root->right, start);
+}
+void markParent(TreeNode* root,unordered_map<TreeNode*, TreeNode*>& parent){
+    if(root==NULL) return;
+    if(root->left!=NULL) parent[root->left] = root;
+    if(root->right!=NULL) parent[root->right] = root;
+    markParent(root->left, parent);
+    markParent(root->right, parent);
+}
+    int amountOfTime(TreeNode* root, int start) {
+        find(root, start);
+        unordered_map<TreeNode*, TreeNode*> parent;
+        markParent(root,parent);
+        unordered_set<TreeNode*> s;
+        s.insert(first);
+        queue< pair<TreeNode*, int> >q;
+        q.push({first,0});
+        int maxLevel = 0;
+        while(q.size()>0){
+            pair<TreeNode*, int> p = q.front();
+            q.pop();
+            int level = p.second;
+            maxLevel = max(maxLevel, level);
+            TreeNode* temp = p.first;
+            if(temp->left!=NULL){
+                if(s.find(temp->left)==s.end()){
+                    q.push({temp->left,level+1});
+                    s.insert(temp->left);
+                }
+            }
+            if(temp->right!=NULL){
+                if(s.find(temp->right)==s.end()){
+                    q.push({temp->right, level+1});
+                    s.insert(temp->right);
+                }
+            }
+            //checking for the parent element using maps
+            if(parent.find(temp)!=parent.end()){
+                if(s.find(parent[temp])==s.end()){
+                    q.push({parent[temp], level+1});
+                    s.insert(parent[temp]);
+                }
+            }
+        }
+        return maxLevel;
+    }
+};
+
+
 int main(){
 }
