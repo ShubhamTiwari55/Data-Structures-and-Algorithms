@@ -59,8 +59,8 @@ public:
 
     maxHeap(vector<int> v){
         hp = v;
-        for(int i=0;i<hp.size();i++){
-            upheapify(i);
+        for(int i=hp.size()/2;i>=0;i--){
+            downHeapify(i);
         }
     }
 };
