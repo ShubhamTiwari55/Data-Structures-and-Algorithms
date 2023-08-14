@@ -1,6 +1,7 @@
 #include<iostream>
 #include<queue>
 #include<unordered_map>
+#include<algorithm>
 using namespace std;
 class ListNode{
 public:
@@ -172,5 +173,59 @@ public:
     }
 };
 
+//leetcode ques no. 2208 -> minimum operation to halve array sum
+class Solution {
+public:
+    int halveArray(vector<int>& nums) {
+        priority_queue<double> pq;
+        double ts = 0.0;
+        for(int i=0;i<nums.size();i++){
+            ts += nums[i];
+            pq.push(nums[i]);
+        }
+        double rs = ts/2.0;
+        int ans = 0;
+        while(ts>rs){
+            double ele = pq.top();
+            pq.pop();
+            ts -= ele/2.0;
+            pq.push(ele/2.0);
+            ans++;
+        }
+        return ans;
+    }
+};
+
+//leetcode ques no. 1383 -. maximum performance of a team
+#define pp pair<int,int>
+
+bool cmp(pp p1, pp p2){
+    return p1.first>p2.first;
+}
+class Solution {
+public:
+    int maxPerformance(int n, vector<int>& speed, vector<int>& efficiency, int k) {
+        vector<pp> v;
+        for(int i=0;i<n;i++){
+            v.push_back({efficiency[i], speed[i]});
+        }
+        sort(v.begin(),v.end(), cmp);
+        long long ts = 0;
+        priority_queue<pp, vector<pp>, greater<pp> >pq;   //minHeap
+        long long ans = 0;
+        for(int i=0;i<n;i++){
+            if(pq.size()==k){
+                ts -= pq.top().first;
+                pq.pop();
+            }
+            pq.push({v[i].second, v[i].first});
+            ts += v[i].second;
+            ans = max(ans, (ts*v[i].first));
+        }
+         return ans%1000000007;
+    }
+};
+
+//leetcode ques no. 
 int main(){
 }
