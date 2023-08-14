@@ -32,7 +32,7 @@ public:
 };
 
 //leetcode ques no. 23 -> merge k sorted lists
-class cmp{
+class compare{
     public:
     bool operator()(ListNode* l1, ListNode* l2){
       return l1->val>l2->val;
@@ -41,7 +41,7 @@ class cmp{
 class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        priority_queue<ListNode*, vector<ListNode*>, cmp >pq;
+        priority_queue<ListNode*, vector<ListNode*>, compare >pq;
         for(int i=0;i<lists.size();i++){
             if(lists[i]==NULL) continue;
             pq.push(lists[i]);
@@ -140,7 +140,7 @@ public:
 
 //leetcode ques no. 692 -> k frequent words
 #define pp pair<int,string>
-class cmp {
+class cmpr {
     public:
         bool operator()(pair<int, string> x, pair<int, string> y) {
             if (x.first == y.first) {
@@ -157,7 +157,7 @@ public:
         for(int i=0;i<words.size();i++){
             m[words[i]]++;
         }
-    priority_queue<pp, vector<pp>, cmp> pq;
+    priority_queue<pp, vector<pp>, cmpr> pq;
     for(auto ele:m){
         string key = ele.first;
         int val = ele.second;
@@ -226,6 +226,34 @@ public:
     }
 };
 
-//leetcode ques no. 
+//leetcode ques no. 1642 -> Furthest Building you can reach
+class Solution {
+public:
+    int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
+        priority_queue<int> pq;
+        int bricksUsed = 0;
+        int i=0;
+        for(;i<heights.size()-1;i++){
+            if(heights[i]>=heights[i+1]) continue;
+            int heightDiff = heights[i+1]-heights[i];
+            if(heightDiff+bricksUsed <= bricks){    //do we have enough bricks
+                bricksUsed += heightDiff;
+                pq.push(heightDiff);
+            }else if(ladders>0){
+                    if(!pq.empty() && pq.top()>heightDiff){
+                bricksUsed = bricksUsed - pq.top() + heightDiff;
+                pq.pop();
+                pq.push(heightDiff);
+            }
+            ladders--;
+         } 
+            else{
+                break;
+            } 
+        }
+        return i;
+    }
+};
+
 int main(){
 }
