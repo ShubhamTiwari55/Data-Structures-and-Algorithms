@@ -57,6 +57,30 @@ public:
     }
 };
 
+//leetcode ques no. 378 -> kth smallest element in sorted matrix//
+class Solution {
+public:
+//Here column and row both are sorted so no need to search the k smallest element beyond k row & column that's why pq is filled only upto min(n,k);
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+    priority_queue<pair<int, pair<int, int> >, vector<pair<int, pair<int, int> > >, greater<pair<int, pair<int, int>>> >pq;
+    int n = matrix.size();
+        for(int i=0;i<min(n,k);i++){
+            pq.push({matrix[i][0], {i,0} });
+        }
+        pair<int, pair<int,int> >ans;
+        while(k-- && !pq.empty()){
+            ans = pq.top();
+            pq.pop();
+            int val = ans.first;
+            int row = ans.second.first;
+            int col = ans.second.second;
+            if(col+1<matrix[row].size()){
+                pq.push({matrix[row][col+1], {row, col+1}});
+            }
+        }
+        return ans.first;
+    }
+};
 
 int main(){
 }
