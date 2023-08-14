@@ -1,5 +1,6 @@
 #include<iostream>
 #include<queue>
+#include<unordered_map>
 using namespace std;
 class ListNode{
 public:
@@ -79,6 +80,60 @@ public:
             }
         }
         return ans.first;
+    }
+};
+
+//leetcode ques no. 373 -> find k pairs with smallest sum
+#define pp pair<int, pair<int,int> >
+class Solution {
+public:
+    vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
+        priority_queue<pp, vector<pp>, greater<pp> >pq;
+        for(int i=0;i<nums1.size();i++){
+            pq.push({nums1[i]+nums2[0], {i,0}});
+        }
+        pp ans;
+        vector<vector<int>> result;
+        while(k-- && !pq.empty()){
+            ans = pq.top();
+            pq.pop();
+            int sm = ans.first;
+            int firstIdx = ans.second.first;
+            int secondIdx = ans.second.second;
+            result.push_back({nums1[firstIdx], nums2[secondIdx]});
+            if(secondIdx+1<nums2.size()){
+                pq.push({nums1[firstIdx]+nums2[secondIdx+1], {firstIdx, secondIdx+1}});
+            }
+        }
+        return result;
+    }
+};
+
+//leetcode ques no. 451 -> sort characters by frequency
+#define pp pair<int,char>
+class Solution {
+public:
+    string frequencySort(string s) {
+        unordered_map<char, int> m;
+        for(int i=0;i<s.length();i++){
+            m[s[i]]++;
+        }
+    //remember to make first argument of pair as frequency so as to use the max heap function without passing any comparator function. The heap automatically compares with the first argument of the pair and assigns the maximum value on the top of the heap//
+    priority_queue<pp> pq;
+    for(auto ele:m){
+        char key = ele.first;
+        int val = ele.second;
+        pq.push({val, key});
+    }
+    string res = "";
+    while(!pq.empty()){
+        pp curr = pq.top();
+        pq.pop();
+        for(int i=0;i<curr.first;i++){
+            res+=curr.second;
+        }
+    }
+    return res;
     }
 };
 

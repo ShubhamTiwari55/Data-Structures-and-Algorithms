@@ -67,6 +67,8 @@ public:
             downHeapify(j,i);
         }
     }
+
+    //algorithm of heapsort
     vector<int> heapsort(){
         int sz = hp.size();
         while(sz>0){
@@ -78,7 +80,7 @@ public:
         }
         return hp;
     }
-
+    //calling the heapsort function and exporting to main function
     void heapsort(vector<int> &v){
         maxHeap hp(v);
         v = hp.heapsort();
