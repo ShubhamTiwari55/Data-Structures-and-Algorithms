@@ -1,0 +1,97 @@
+#include<iostream>
+#include<vector>
+#include<climits>
+using namespace std;
+class maxHeap{
+    vector<int> hp;
+    int i; //[0,i] -> maxHeap
+     void upheapify(int ci){
+        while(ci>0){
+            int pi = (ci-1)/2;
+            if(hp[pi]<hp[ci]){
+                swap(hp[pi],hp[ci]);
+                ci = pi;
+            }
+            else break;
+        }
+    }
+public:
+    void downHeapify(int idx, int bound){
+        while(idx<hp.size()){
+            int lc = 2*idx+1;   //left child
+            int rc = 2*idx+2;   //right child
+            if(lc>=bound) break;    //idx -> leaf
+            int maxEl = idx;
+            if(hp[lc]>hp[maxEl]) maxEl = lc;
+            if(rc<hp.size() && hp[rc]>hp[maxEl]) maxEl = rc;
+            if(maxEl!=idx){
+                swap(hp[idx], hp[maxEl]);
+                idx = maxEl;    //for next iteration
+            }else {
+                break;
+            }
+        }
+    }
+
+    void pop(){     //removes the highest priority element
+        if(isEmpty()) return;
+        swap(hp[0],hp[hp.size()-1]);
+        //hp.pop_back();
+        i--;
+        if(!isEmpty()) downHeapify(0,i);
+    }
+    void push(int element){     //A method to create heap by pushing individual elements//
+        hp.push_back(element);
+        upheapify(hp.size()-1);
+    }
+
+    int peek(){     //returns max value of the heap
+        if(hp.size()==0) return INT_MAX;
+        return hp[0];
+    }
+    bool isEmpty(){
+        return hp.size()==0;
+    }
+    void display(){
+        for(int j=0;j<i;j++){
+            cout<<hp[j]<<" ";
+        }
+        cout<<endl;
+    }
+
+    maxHeap(vector<int> &v){
+        hp = v;
+        int n = hp.size();
+        i = n;
+        for(int j=hp.size()/2;j>=0;j--){
+            downHeapify(j,i);
+        }
+    }
+    vector<int> heapsort(){
+        int sz = hp.size();
+        while(sz>0){
+            int maxEl = 0;
+            swap(hp[maxEl], hp[i]);
+            i--;
+            sz--;
+            downHeapify(0,i);
+        }
+        return hp;
+    }
+
+    void heapsort(vector<int> &v){
+        maxHeap hp(v);
+        v = hp.heapsort();
+    }
+};
+int main(){
+    vector<int> v = {9,6,1,19,3,2,8,12,5};
+    maxHeap h(v);
+    h.display();
+    h.heapsort(v);
+     for(int j=0;j<v.size();j++){
+            cout<<v[j]<<" ";
+        }
+        cout<<endl;
+   
+}
