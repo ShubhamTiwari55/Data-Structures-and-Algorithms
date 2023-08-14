@@ -137,5 +137,40 @@ public:
     }
 };
 
+//leetcode ques no. 692 -> k frequent words
+#define pp pair<int,string>
+class cmp {
+    public:
+        bool operator()(pair<int, string> x, pair<int, string> y) {
+            if (x.first == y.first) {
+                return x.second > y.second;
+            } else {
+                return x.first < y.first;
+            }
+        }
+    };
+class Solution {
+public:
+     vector<string> topKFrequent(vector<string>& words, int k) {
+        unordered_map<string, int> m;
+        for(int i=0;i<words.size();i++){
+            m[words[i]]++;
+        }
+    priority_queue<pp, vector<pp>, cmp> pq;
+    for(auto ele:m){
+        string key = ele.first;
+        int val = ele.second;
+        pq.push({val, key});
+    }
+    vector<string> res;
+    while(k-- && !pq.empty()){
+        pp curr = pq.top();
+        pq.pop();
+        res.push_back(curr.second);
+    }
+    return res;
+    }
+};
+
 int main(){
 }
