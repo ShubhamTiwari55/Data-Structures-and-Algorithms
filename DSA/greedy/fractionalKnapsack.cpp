@@ -2,6 +2,8 @@
 #include<vector>
 #include<algorithm>
 using namespace std;
+
+//if return statement is true i.e r1>r2 it will return p1 else will return p2//
 bool cmp(pair<int,int> &p1, pair<int, int> &p2){
     double r1 = (p1.first*1.0)/(p1.second*1.0);
     double r2 = (p2.first*1.0)/(p2.second*1.0);
