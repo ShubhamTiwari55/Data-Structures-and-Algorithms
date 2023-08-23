@@ -113,5 +113,31 @@ public:
     }
 };
 
+//leetcode ques no. 781 -> Rabbits in a forest
+class Solution {
+public:
+    int numRabbits(vector<int>& answers) {
+        unordered_map<int,int>m;
+        int result = 0;
+        for(int i=0;i<answers.size();i++){
+            if(!m[answers[i]+1]){
+                result += (answers[i]+1);     //we started a new color grp
+                if(answers[i]==0) continue;
+                m[answers[i]+1] = 1;
+            }
+            else{
+                m[answers[i]+1]++;
+                int key = answers[i]+1;
+                int val = m[key];
+                //we have found all the rabbits of grp, now eliminate the grp
+                if(key==val){
+                    m.erase(key);
+                }
+            }
+        }
+        return result;
+    }
+};
+
 int main(){
 }
