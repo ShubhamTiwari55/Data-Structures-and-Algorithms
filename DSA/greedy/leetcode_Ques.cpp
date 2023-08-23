@@ -114,6 +114,8 @@ public:
 };
 
 //leetcode ques no. 781 -> Rabbits in a forest
+// https://leetcode.com/problems/rabbits-in-forest/description/
+
 class Solution {
 public:
     int numRabbits(vector<int>& answers) {
@@ -136,6 +138,42 @@ public:
             }
         }
         return result;
+    }
+};
+
+//leetcode ques no. 253 -> Meeting rooms II
+class Solution{
+public:
+    int minMeetingRooms(vector<vector<int>>& intervals){
+        vector<int> starting;
+        vector<int> ending;
+        for(auto el:intervals){
+            starting.push_back(el[0]);
+            ending.push_back(el[1]);
+        }
+        sort(starting.begin(), starting.end());
+        sort(ending.begin(), ending.end());
+        int rooms = 0;
+        int ans = 0;
+        int i=0;
+        int j=0;
+        while(i<starting.size() && j<ending.size()){
+            if(starting[i]<ending[i]){
+                rooms++;
+                ans = max(ans,rooms);
+                i++;
+            }
+            else if(starting[i]>ending[i]){
+                rooms--;
+                j++;
+            }
+            else{
+                i++;
+                j++;
+            } //starting[i]==ending[i] i. e both start and end at same time
+            
+        }
+        return ans;
     }
 };
 
