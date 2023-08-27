@@ -25,7 +25,7 @@ int fBottomUp(int n){
     return dp[n];
 }
 int main(){
-    int n = 10;
+    int n = 13;
     dp.clear();
     dp.resize(n+5,-1);
     cout<<fTopDowm(n)<<endl;
