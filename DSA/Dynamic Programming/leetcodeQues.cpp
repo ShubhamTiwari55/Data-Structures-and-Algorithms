@@ -58,7 +58,7 @@ public:
        dp.clear();
        dp.resize(105,-1);
        return fTopDown(nums,0);
-       //return fBottomUP(nums);    //iterative solution
+       //return fBottomUP(nums);    //iterative solution using recurrence relation
     }
 };
 
