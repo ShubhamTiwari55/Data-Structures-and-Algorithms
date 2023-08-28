@@ -62,5 +62,29 @@ public:
     }
 };
 
+//leetcode ques no. 1155 -> Number of dice rolls with target sum
+//https://leetcode.com/problems/number-of-dice-rolls-with-target-sum/submissions/
+#define mod 1000000007
+class Solution {
+public:
+//As there are two parameters changing so we need to use a 2d vector//
+    vector<vector<int>>dp;
+    int f(int n, int k, int t){
+        if(n==0 && t==0) return 1;
+        if(n==0) return 0;
+        if(dp[n][t]!=-1) return dp[n][t];
+        int sum = 0;
+        for(int i=1;i<=k;i++){
+            if(t-i<0) continue;
+            sum = (sum%mod + f(n-1,k,t-i)%mod)%mod;
+        }
+        return dp[n][t]=sum%mod;
+    }
+    int numRollsToTarget(int n, int k, int target) {
+        dp.clear();
+        dp.resize(36,vector<int>(1007,-1));
+        return f(n,k,target);
+    }
+};
 int main(){
 }
