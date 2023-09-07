@@ -6,7 +6,6 @@
 #include<vector>
 #include<climits>
 using namespace std;
-
 vector<int> h; //heights
 int k;
 vector<int> dp;
