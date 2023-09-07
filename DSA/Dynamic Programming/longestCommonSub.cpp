@@ -36,8 +36,11 @@ public:
             return dp[i][j][k]= f(i+1, j+1, k)+1;
         }else{
             //if chars not matching we have two options either increase index of s1 or s2 and return the one who gives max for us.
-            if(k>0) return dp[i][j][k] = 1+f(i+1,j+1,k-1);
-            return dp[i][j][k]= max({f(i, j+1, k), f(i+1, j, k)});
+            if(k>0){  //changing the element and checking by using max function that if it is worth it or not
+                return dp[i][j][k] = max({1+f(i+1,j+1,k-1), f(i+1,j,k), f(i,j+1,k)});
+            }else{
+                return dp[i][j][k]= max({f(i, j+1, k), f(i+1, j, k)});
+            }
         }
     }
     int longestCommonSubsequence(string text1, string text2, int k) {
