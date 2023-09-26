@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include<climits>
 #include<unordered_map>
 using namespace std;
 
@@ -154,6 +155,27 @@ public:
         dp.clear();
         dp.resize(205, vector<int>(20000, -1));
         return f(nums, 0, s/2);
+    }
+};
+
+//leetcode ques no. 64 -> Minimum path sum
+class Solution {
+public:
+int n,m;
+    vector<vector<int>> gridd, dp;
+    int f(int i, int j){
+        if(i==n-1 && j==m-1) return gridd[n-1][m-1];
+        if(i<0 || j<0 || i>=n || j>=m) return INT_MAX;
+        if(dp[i][j]!=-1) return dp[i][j];
+        return dp[i][j] = gridd[i][j]+min(f(i,j+1),f(i+1,j));
+    }
+    int minPathSum(vector<vector<int>>& grid) {
+        n = grid.size();
+        m = grid[0].size();
+        gridd = grid;
+        dp.clear();
+        dp.resize(205, vector<int>(205,-1));
+        return f(0,0);
     }
 };
 int main(){
