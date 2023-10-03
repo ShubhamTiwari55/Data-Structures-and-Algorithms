@@ -1,5 +1,7 @@
 #include<iostream>
 #include<vector>
+#include<set>
+#include<queue>
 using namespace std;
 
 //leetcode ques no. 733 -> Flood Fill
@@ -31,5 +33,28 @@ public:
         int d = edges[1][1];
 
         return (a==c || b==c)?c:d;
+    }
+};
+
+//leetcode ques no. 841 -> keys and rooms
+class Solution {
+public:
+    bool canVisitAllRooms(vector<vector<int>>& rooms) {
+        set<int>visited;
+        queue<int>q;
+        q.push(0);
+        visited.insert(0);
+        while(!q.empty()){
+            int curr = q.front();
+            q.pop();
+            for(int neighbour:rooms[curr]){
+                if(visited.count(neighbour)==0){
+                    //neighbour not visited yet
+                    q.push(neighbour);
+                    visited.insert(neighbour);
+                }
+            }
+        }
+        return visited.size()==rooms.size();
     }
 };
