@@ -58,3 +58,49 @@ public:
         return visited.size()==rooms.size();
     }
 };
+
+//leetcode ques no.133 -> clone graph
+class Node {
+public:
+    int val;
+    vector<Node*> neighbors;
+    Node() {
+        val = 0;
+        neighbors = vector<Node*>();
+    }
+    Node(int _val) {
+        val = _val;
+        neighbors = vector<Node*>();
+    }
+    Node(int _val, vector<Node*> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+};
+class Solution {
+public:
+    vector<Node*> nodeRegisters;
+
+    void dfs(Node* actual, Node* clone){
+        for(auto neighbour : actual->neighbors){
+            if(!nodeRegisters[neighbour->val]){
+                //create the neighbour for the first time
+            Node* newNode = new Node(neighbour->val);
+            nodeRegisters[newNode->val] = newNode;
+            clone->neighbors.push_back(newNode);
+            dfs(neighbour, newNode);
+            }else {
+                clone->neighbors.push_back(nodeRegisters[neighbour->val]);
+            }
+        }
+    }
+
+    Node* cloneGraph(Node* node) {
+        if(node==NULL) return NULL;
+        Node* clone = new Node(node->val);  //source node
+        nodeRegisters.resize(110, NULL);  //this array contains reference to the created nodes i.e if NULL is there that means no node is created and if there is any value then a node is created by that value
+        nodeRegisters[clone->val] = clone;
+        dfs(node, clone);
+        return clone;
+    }
+}; 
