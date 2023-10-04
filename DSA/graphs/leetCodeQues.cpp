@@ -104,3 +104,36 @@ public:
         return clone;
     }
 }; 
+
+//leetcode ques no. 1034 -> coloring a border
+class Solution {
+public:
+    vector<pair<int,int>>internal;
+    void dfs(vector<vector<int>>& grid, int r, int c, int newColor, int originalColor){
+        if (r < 0 || c < 0 || r >= grid.size() || c >= grid[0].size() || grid[r][c] != originalColor) return;
+        grid[r][c] = -newColor;
+        dfs(grid, r+1, c, newColor, originalColor);
+        dfs(grid, r-1, c, newColor, originalColor);
+        dfs(grid, r, c+1, newColor, originalColor);
+        dfs(grid, r, c-1, newColor, originalColor);
+        //we are applying flood fill on connected components and then removing the color of inner elements so that we can get a border of all the connected components
+        //below code if for returning back from recursion in which we are filling colors for border and unfilling the color of inner elements
+        if(!(r==0 || c==0 || r==grid.size()-1 || c==grid[0].size()-1 || grid[r+1][c]!=-newColor ||  grid[r][c+1]!=-newColor ||  grid[r-1][c]!=-newColor ||  grid[r][c-1]!=-newColor)) internal.push_back({r, c}); //internal cell
+    }
+    vector<vector<int>> colorBorder(vector<vector<int>>& grid, int row, int col, int color) {
+        int originalColor = grid[row][col];
+        if(originalColor == color) return grid;
+        dfs(grid, row, col, color, originalColor);
+        for(auto p:internal){
+            int i = p.first;
+            int j = p.second;
+            grid[i][j] = originalColor;
+        }
+        for(int i=0;i<grid.size();i++){
+            for(int j=0;j<grid[0].size();j++){
+                if(grid[i][j]<0) grid[i][j] = -grid[i][j];
+            }
+        }
+        return grid;
+    }
+};
