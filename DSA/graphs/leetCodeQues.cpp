@@ -137,3 +137,52 @@ public:
         return grid;
     }
 };
+
+//leetcode ques no. 200 -> no. of islands
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int r = grid.size();
+        if (r == 0) return 0;
+        int c = grid[0].size();
+        int cc = 0; //connected components
+        for(int i=0; i<r; i++){
+            for(int j=0; j<c; j++){
+                if(grid[i][j]=='0') continue; //water body or already visited land
+                //new unvisited connected component found
+                cc++;
+                grid[i][j] = '0';  //mark it visited
+                queue<pair<int,int>> q;
+                q.push({i,j});  //store the src node and begin bfs traversal
+                while(!q.empty()){
+                    auto curr = q.front();
+                    q.pop();
+                    //go to all unvisited node of the cc
+                    int currRow = curr.first;
+                    int currCol = curr.second;
+                    //check up
+                    if(currRow-1>=0 && grid[currRow-1][currCol]=='1'){
+                        q.push({currRow-1,currCol});
+                        grid[currRow-1][currCol]='0';
+                    }
+                    //check down
+                    if(currRow+1<r && grid[currRow+1][currCol]=='1'){
+                        q.push({currRow+1,currCol});
+                        grid[currRow+1][currCol]='0';
+                    }
+                    //check left
+                    if(currCol-1>=0 && grid[currRow][currCol-1]=='1'){
+                        q.push({currRow,currCol-1});
+                        grid[currRow][currCol-1]='0';
+                    }
+                    //check right
+                    if(currCol+1<c && grid[currRow][currCol+1]=='1'){
+                        q.push({currRow,currCol+1});
+                        grid[currRow][currCol+1]='0';
+                    }
+                }
+            }
+        }
+        return cc;
+    }
+};

@@ -22,6 +22,8 @@ void display(){
     }
 }
 int main(){
+
+    vector<int> arr;
     cin>>v;
     graph.resize(v, list<int>());
     int e;
