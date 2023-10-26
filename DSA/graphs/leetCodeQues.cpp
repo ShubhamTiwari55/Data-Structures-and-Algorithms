@@ -186,3 +186,59 @@ public:
         return cc;
     }
 };
+
+//Leetcode ques no. 417 -> Pacific atlantic water flow
+class Solution {
+public:
+    vector<vector<int>> dir = {{1,0},{-1,0},{0,1},{0,-1}};
+    int rows;
+    int cols;
+    vector<vector<int>> h;
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+        h = heights;
+        rows = heights.size();
+        cols = heights[0].size();
+        queue<pair<int,int>> pacificBfs;
+        queue<pair<int,int>> atlanticBfs;
+        //step of multisource bfs
+        for(int i=0;i<rows;i++){
+            pacificBfs.push({i,0});
+            atlanticBfs.push({i,cols-1});
+        }
+        for(int i=1;i<cols;i++){
+            pacificBfs.push({0,i});
+        }
+        for(int i=0;i<cols-1;i++){
+            atlanticBfs.push({rows-1,i});
+        }
+        vector<vector<bool>> pacific = bfs(pacificBfs);
+        vector<vector<bool>> atlantic = bfs(atlanticBfs);
+        vector<vector<int>> result;
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                if(pacific[i][j] && atlantic[i][j]) result.push_back({i,j});
+            }
+        }
+        return result;
+    }
+    vector<vector<bool>> bfs(queue<pair<int,int>> &q){
+        vector<vector<bool>> visited(rows, vector<bool>(cols,false));
+        while(!q.empty()){
+            auto cell = q.front();
+            q.pop();
+            int i = cell.first;
+            int j = cell.second;
+            visited[i][j] = true;
+            for(int d=0;d<4;d++){
+                int newRow = i+dir[d][0];
+                int newCol = j+dir[d][1];
+                if(newRow<0 || newCol<0 || newRow>=rows || newCol>=cols) continue;
+                if(visited[newRow][newCol]) continue;
+                if(h[newRow][newCol]<h[i][j]) continue; //neighbour<currentCell
+                //In this approach we are proceeding in opposite way i.e we are moving from ocean to land and if the next height is greater than current it means we can move forward because actually we have to move water from high height to low height, by using this technique we can find visited height i.e from where water can flow easily and the intersection of both visited ocean will be our answer
+                q.push({newRow,newCol});
+            }
+        }
+        return visited;
+    }
+};
