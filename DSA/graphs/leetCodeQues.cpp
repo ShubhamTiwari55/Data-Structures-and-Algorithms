@@ -2,6 +2,8 @@
 #include<vector>
 #include<set>
 #include<queue>
+#include<unordered_set>
+#include<list>
 using namespace std;
 
 //leetcode ques no. 733 -> Flood Fill
@@ -285,5 +287,66 @@ public:
             }
         }
             return (fo==0)?mins-1:-1;
+    }
+};
+
+//leetcode ques no. 207 -> course schedule
+class Solution {
+public:
+    vector<list<int> >graph;
+    int v;  // Number of vertices
+
+    void addEdge(int a, int b, bool bidir=true) {
+        if (a >= graph.size()) graph.resize(a + 1);
+        if (b >= graph.size()) graph.resize(b + 1);
+
+        graph[a].push_back(b);
+        if (bidir) {
+            graph[b].push_back(a);
+        }
+    }
+
+    bool topoBFS() {
+        vector<int> indegree(v, 0);
+        for (int i = 0; i < v; i++) {
+            for (auto neighbour : graph[i]) {
+                indegree[neighbour]++;
+            }
+        }
+        queue<int> q;
+        unordered_set<int> vis;
+        for (int i = 0; i < v; i++) {
+            if (indegree[i] == 0) {
+                q.push(i);
+                vis.insert(i);
+            }
+        }
+        int ct = 0;
+        while (!q.empty()) {
+            ct++;
+            int node = q.front();
+            q.pop();
+            for (auto neighbour : graph[node]) {
+                if (!vis.count(neighbour)) {
+                    indegree[neighbour]--;
+                    if (indegree[neighbour] == 0) {
+                        q.push(neighbour);
+                        vis.insert(neighbour);
+                    }
+                }
+            }
+        }
+        return (ct == v);
+    }
+
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        if(prerequisites.size()==0) return true;
+        v = numCourses;
+        graph.resize(v, list<int>());
+        for (auto pre : prerequisites) {
+            addEdge(pre[1], pre[0], false);
+        }
+
+        return topoBFS();
     }
 };
