@@ -5,6 +5,8 @@
 using namespace std;
 //choose minimum edge weight which do not form cycles
 
+//Should be applied for sparse graph where no. of edges < no. of vertices
+
 int find(vector<int> &parent, int a){
     return parent[a] = (parent[a]==a ? a:find(parent,parent[a]));
 }

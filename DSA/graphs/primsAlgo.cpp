@@ -7,6 +7,8 @@
 // update the mapping
 // go to every neighbour of the curr element, and add only those which are non visited and have a better wt proposition
 
+//should be applied for dense graph where no. of edges > no. of vertices
+
 #include<bits/stdc++.h>
 #define pp pair<int,int>
 #define ll long long int
