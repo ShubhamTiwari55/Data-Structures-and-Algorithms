@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include<climits>
 using namespace std;
 
 // Leetcode ques no. 1052 -> Grumpy bookstore owner
@@ -37,6 +38,31 @@ public:
             if(grumpy[i]==0) sum+=customers[i];
         }
         return sum;
+    }
+};
+
+// leetcode ques no. 209 -> Minimum Size Subarray Sum
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& nums) {
+        int minLen = INT_MAX;
+        int len;
+        int sum = 0;
+        int i = 0;
+        int j = 0;
+        int n = nums.size();
+        while(j<n){
+            sum += nums[j];
+            while(sum>=target){
+                len = j-i+1;
+                minLen = min(minLen, len);
+                sum -= nums[i];
+                i++;
+            }
+            j++;
+        }
+        if(minLen==INT_MAX) return 0;
+        else return minLen;
     }
 };
 
