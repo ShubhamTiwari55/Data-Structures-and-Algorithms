@@ -39,5 +39,31 @@ public:
     }
 };
 
+// leetcode ques no. 204 -> count primes
+class Solution {
+public:
+	int countPrimes(int n) {
+		//prime no. generation
+		vector<bool> prime(n + 1, true);
+		prime[0] = false;
+		prime[1] = false;
+		for (int i = 2; i <= sqrt(n); i++) {
+			if (prime[i]) {
+				for (int j = i * 2; j <= n; j += i) {
+					prime[j] = false;
+				}
+			}
+		}
+		//counting prime numbers
+		int primeCount = 0;
+		for (int i = 2; i < n; i++) {
+			if (prime[i]) {
+				primeCount++;
+			}
+		}
+		return primeCount;
+	}
+};
+
 int main(){
 }
