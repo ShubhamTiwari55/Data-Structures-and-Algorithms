@@ -2,6 +2,7 @@
 #include<vector>
 using namespace std;
 
+//Leetcode ques no.37 -> Suduko Solver
 class Solution {
 public:
     bool isSafe(vector<vector<char>> &board, int r, int c, int num){
